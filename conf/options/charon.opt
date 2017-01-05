@@ -286,6 +286,14 @@ charon.processor.priority_threads {}
 	Section to configure the number of reserved threads per priority class
 	see JOB PRIORITY MANAGEMENT in **strongswan.conf**(5).
 
+charon.reauth_on_address_change = yes
+	Reauthenticate an IKE_SA if MOBIKE update not supported.
+
+	If enabled (default), charon tries to reauthenticate the IKE_SA if a
+	change in the local address configuration makes the current path unusable,
+	but MOBIKE is not supported. If disabled, instead the IKE_SA is immediately
+	destroyed in such situations.
+
 charon.receive_delay = 0
 	Delay in ms for receiving packets, to simulate larger RTT.
 

@@ -2574,6 +2574,15 @@ METHOD(ike_sa_t, roam, status_t,
 		this->task_manager->queue_mobike(this->task_manager, TRUE, address);
 		return this->task_manager->initiate(this->task_manager);
 	}
+	if (!lib->settings->get_bool(lib->settings,
+								 "charon.reauth_on_address_change", TRUE))
+	{
+		/* no MOBIKE, and reauth administratively prohibited; a proper
+		 * delete is unlikely to make it, so just destroy this IKE_SA. */
+		DBG1(DBG_IKE, "destroying IKE_SA due to address change");
+		charon->bus->ike_updown(charon->bus, &this->public, FALSE);
+		return DESTROY_ME;
+	}
 
 	/* ... reauth if not */
 	if (!has_condition(this, COND_ORIGINAL_INITIATOR))
