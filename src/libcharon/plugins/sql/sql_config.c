@@ -405,7 +405,7 @@ static peer_cfg_t *build_peer_cfg(private_sql_config_t *this, enumerator_t *e,
 				.dpd = dpd_delay,
 #ifdef ME
 				.mediation = mediation,
-				.mediated_by = mediated_cfg,
+				.mediated_by = mediated_cfg->get_name(mediated_cfg),
 				.peer_id = peer_id,
 #endif /* ME */
 			};
